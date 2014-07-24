@@ -62,7 +62,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/get',function(req, res){
-    MongoClient.connect('mongodb://argon:qmfflwkem@ds053429.mongolab.com:53429/heroku_app27705006', function(err, db){
+    MongoClient.connect('mongodb://argon:qmfflwkem@ds027479.mongolab.com:27479/heroku_app27734772', function(err, db){
         db.collection('testArticle', function(err, collection){
             collection.find().toArray(function(err, items){
                 res.send(items);
@@ -74,7 +74,7 @@ app.get('/addId/:id/:key', function(req, res){
     var key = req.params.key;
     var id = req.params.id;
     var oldid=""
-    MongoClient.connect('mongodb://argon:qmfflwkem@ds053429.mongolab.com:53429/heroku_app27705006', function(err, db){
+    MongoClient.connect('mongodb://argon:qmfflwkem@ds027479.mongolab.com:27479/heroku_app27734772', function(err, db){
         db.collection('testArticle', function(err, collection){
             collection.findOne({"Keyword": key}, function(err, doc){
                 if(doc){
@@ -129,7 +129,7 @@ app.get('/deleteId/:id/:key', function(req, res){
     var key = req.params.key;
     var id = req.params.id;
     var oldid=""
-    MongoClient.connect('mongodb://argon:qmfflwkem@ds053429.mongolab.com:53429/heroku_app27705006', function(err, db){
+    MongoClient.connect('mongodb://argon:qmfflwkem@ds027479.mongolab.com:27479/heroku_app27734772', function(err, db){
         db.collection('testArticle', function(err, collection){
             collection.findOne({"Keyword": key}, function(err, doc){
                 if(doc){
@@ -172,7 +172,7 @@ app.get('/getArticle/:key', function (req, res) {
     var key = req.params.key;
     var id = req.params.id;
     var oldid = ""
-    MongoClient.connect('mongodb://argon:qmfflwkem@ds053429.mongolab.com:53429/heroku_app27705006', function (err, db) {
+    MongoClient.connect('mongodb://argon:qmfflwkem@ds027479.mongolab.com:27479/heroku_app27734772', function (err, db) {
         db.collection('testArticle', function (err, collection) {
             collection.findOne({ "Keyword": key }, function (err, doc) {
                 if (doc) {
