@@ -73,8 +73,6 @@ app.post('/join', function (req, res) {
         'password': req.body.password
     };
     var query = connection.query('insert into users set ?', user, function (err, result) {
-        console.log(req.body.useremail);
-        console.log(req.body.password);
         if (err) {
             console.error(err);
             throw err;
