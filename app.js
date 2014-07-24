@@ -67,7 +67,7 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
-app.post('/join', function (req, res) {
+app.post('/login', function (req, res) {
     var user = {
         'useremail': req.body.useremail,
         'password': req.body.password
@@ -81,7 +81,6 @@ app.post('/join', function (req, res) {
         res.send(200, 'success');
     });
 });
-
 
 app.post('/login', function (req, res) {
     var user = {
