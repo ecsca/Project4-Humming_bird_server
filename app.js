@@ -79,7 +79,7 @@ app.post('/join', function (req, res) {
             console.error(err);
             throw err;
         }
-        //console.log(query);
+        console.log(query);
         res.send(200, 'success');
     });
 });
@@ -94,7 +94,7 @@ app.post('/login', function (req, res) {
             console.error(err);
             throw err;
         }
-        //console.log(result);
+        console.log(result);
         res.send(200, 'success');
     });
 });
@@ -104,7 +104,7 @@ app.get('/users', function (req, res) {
         console.log(rows);
         res.json(rows);
     });
-    //console.log(query);
+    console.log(query);
 });
 
 app.get('/', routes.index);
