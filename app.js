@@ -77,10 +77,11 @@ app.post('/join', function (req, res) {
             console.error(err);
             throw err;
         }
-        console.log(query);
+        console.log(result);
         res.send(200, 'success');
     });
 });
+
 
 app.post('/login', function (req, res) {
     var user = {
