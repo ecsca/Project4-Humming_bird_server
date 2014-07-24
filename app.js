@@ -67,20 +67,6 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
-app.post('/join', function (req, res) {
-    var user = {
-        'useremail': req.body.useremail,
-        'password': req.body.password
-    };
-    var query = connection.query('insert into users set ?', user, function (err, result) {
-        if (err) {
-            console.error(err);
-            throw err;
-        }
-        console.log(result);
-        res.send(200, 'success');
-    });
-});
 
 app.post('/login', function (req, res) {
     var user = {
