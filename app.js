@@ -67,7 +67,7 @@ if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
 
-app.post('/login', function (req, res) {
+app.post('/join', function (req, res) {
     var user = {
         'useremail': req.body.useremail,
         'password': req.body.password
