@@ -9,19 +9,27 @@ var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 var mongo = require('mongodb');
+var mysql = require('mysql');
 
 //var terminal = require('child_process').exec('python getData.py');
-var terminal = require('child_process').exec('ls');
-
-
-terminal.stdout.on('data', function (data) {
-    console.log('stdout: ' + data);
-});
-
 //var terminal = require('child_process').exec('python getData.py');
 console.log("terminal started");
 
+var connection = mysql.createConnection({
+    host: 'us-cdbr-east-06.cleardb.net',
+    user: 'b02535f8bb3e27',
+    port: 3306,
+    password: 'f00599ce453aa27',
+    database: 'heroku_4225976e02f5a12'
+});
 
+connection.connect(function (err) {
+    if (err) {
+        console.error('mysql connection err');
+        console.error(err);
+        throw err;
+    }
+});
 /*
    var Server = mongo.Server,
    Db = mongo.Db,
@@ -58,6 +66,44 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
+
+app.post('/join', function (req, res) {
+    var user = {
+        'useremail': req.body.useremail,
+        'password': req.body.password
+    };
+    var query = connection.query('insert into users set ?', user, function (err, result) {
+        if (err) {
+            console.error(err);
+            throw err;
+        }
+        console.log(query);
+        res.send(200, 'success');
+    });
+});
+
+app.post('/login', function (req, res) {
+    var user = {
+        'useremail': req.body.useremail,
+        'password': req.body.password
+    };
+    var query = connection.query("select * from users where useremail = '"+useremail+"'", user, function (err, result) {
+        if (err) {
+            console.error(err);
+            throw err;
+        }
+        console.log(result);
+        res.send(200, 'success');
+    });
+});
+
+app.get('/users', function (req, res) {
+    var query = connection.query('select * from users', function (err, rows) {
+        console.log(rows);
+        res.json(rows);
+    });
+    console.log(query);
+});
 
 app.get('/', routes.index);
 app.get('/users', user.list);
