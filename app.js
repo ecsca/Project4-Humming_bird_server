@@ -10,11 +10,11 @@ var http = require('http');
 var path = require('path');
 var mongo = require('mongodb');
 var mysql = require('mysql');
+var crypto = require('crypto');
 
 //var terminal = require('child_process').exec('python getData.py');
 //var terminal = require('child_process').exec('python getData.py');
 console.log("terminal started");
-
 
 var db_config = {
     host: 'us-cdbr-east-06.cleardb.net',
@@ -75,14 +75,8 @@ if ('development' == app.get('env')) {
 
 
 app.post('/join', function (req, res) {
-    var user = [req.body.useremail, req.body.password];
-    console.log('useremail');
-    console.log(req.body.useremail);
-    console.log('password');
-    console.log(req.body.password);
-    console.log('user');
-    console.log(user);
-    console.log('end');
+    var pass = crypto.createHash('SHA512').update(req.body.password).digest('hex');
+    var user = [req.body.useremail, pass];
     var query = connection.query('INSERT INTO users SET useremail = ?, password = ?', user, function (err, result) {
         console.log(query);
         if (err) {
@@ -100,7 +94,7 @@ app.post('/login', function (req, res) {
             console.error(err);
             throw err;
         }
-        if (result[0].password == req.body.password) {
+        if (result[0].password == crypto.createHash('SHA512').update(req.body.password).digest('hex')) {
         res.send(200, 'success');
         }
         else {
