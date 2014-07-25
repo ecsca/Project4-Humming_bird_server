@@ -94,7 +94,7 @@ app.post('/login', function (req, res) {
             console.error(err);
             throw err;
         }
-        if (result[0].password == crypto.createHash('SHA512').update(req.body.password).digest('hex')) {
+        if (result[0].password === crypto.createHash('SHA512').update(req.body.password).digest('hex')) {
         res.send(200, 'success');
         }
         else {
