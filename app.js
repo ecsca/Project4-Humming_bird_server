@@ -97,7 +97,7 @@ app.post('/login', function (req, res) {
         }
         else {
             if (result[0].password === crypto.createHash('SHA512').update(req.body.password).digest('hex')) {
-            var user = [req.body.useremail, req.body.regid];
+            var user = [req.body.regid, reg.body.useremail];
             var temp = connection.query("UPDATE users regid = ? WHERE useremail = ?", user, function (err, result) {
                 if (err) {
                     console.log(err);
