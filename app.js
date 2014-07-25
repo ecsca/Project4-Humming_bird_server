@@ -104,7 +104,7 @@ app.post('/login', function (req, res) {
             console.error(err);
             throw err;
         }
-        console.log(result);
+        console.log(result.password);
         res.send(200, 'success');
     });
 });
