@@ -106,10 +106,10 @@ app.post('/login', function (req, res) {
 
 app.get('/users', function (req, res) {
     var query = connection.query('select * from users', function (err, rows) {
-        console.log(rows);
+        //console.log(rows);
         res.json(rows);
     });
-    console.log(query);
+    //console.log(query);
 });
 
 app.get('/', routes.index);
