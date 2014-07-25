@@ -77,7 +77,7 @@ if ('development' == app.get('env')) {
 app.post('/join', function (req, res) {
     var pass = crypto.createHash('SHA512').update(req.body.password).digest('hex');
     var user = [req.body.useremail, pass];
-    var query = connection.query('INSERT INTO users SET useremail = ?, password = ? regid = ?', user, function (err, result) {
+    var query = connection.query('INSERT INTO users SET useremail = ?, password = ?', user, function (err, result) {
         console.log(query);
         if (err) {
             console.error(err);
@@ -95,7 +95,7 @@ app.post('/login', function (req, res) {
             res.send("Wrong Id");
         }
         else {
-            //var temp = connection.query("UPDAT)
+            var temp = connection.query("UPDATE users regid = ? WHERE )
             if (result[0].password === crypto.createHash('SHA512').update(req.body.password).digest('hex')) {
                 res.send(200, 'success');
             }
