@@ -95,18 +95,17 @@ app.post('/join', function (req, res) {
     });
 });
 app.post('/login', function (req, res) {
-    var user = {
-        'useremail': req.body.useremail,
-        'password': req.body.password
-    };
     var query = connection.query("select password from users where useremail = '"+req.body.useremail+"'", req.body.user, function (err, result) {
         if (err) {
             console.error(err);
             throw err;
         }
-        console.log(result);
-        console.log(result[0].password);
+        if (result[0].password == req.body.password) {
         res.send(200, 'success');
+        }
+        else {
+            res.send(200, 'login failed');
+        }
     });
 });
 
