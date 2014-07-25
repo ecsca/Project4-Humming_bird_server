@@ -94,7 +94,7 @@ app.post('/login', function (req, res) {
     var query = connection.query("select * from users where useremail = ?", [req.body.useremail], function (err, result) {
         console.log("------------------------------------")
         console.log(result);
-        console.log(result === []);
+        console.log(result.length==0);
         console.log("------------------------------------")
     });
     var query = connection.query("select password from users where useremail = ?",[req.body.useremail], function (err, result) {
