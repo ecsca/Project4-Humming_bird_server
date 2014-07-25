@@ -75,8 +75,8 @@ if ('development' == app.get('env')) {
 
 
 app.post('/join', function (req, res) {
-    var user = { useremail: req.body.useremail, password: req.body.password };
-    var query = connection.query('INSERT INTO users SET ?', user, function (err, result) {
+    var user = [req.body.useremail, req.body.password];
+    var query = connection.query('INSERT INTO users SET useremail = ?, password = ?', user, function (err, result) {
         console.log(query);
         if (err) {
             console.error(err);
