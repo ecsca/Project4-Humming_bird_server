@@ -79,10 +79,10 @@ app.post('/join', function (req, res) {
     var query = connection.query('INSERT INTO users SET ?', user, function (err, result) {
         if (err) {
             console.error(err);
-            //throw err;
+            throw err;
         }
         console.log(query);
-        res.send(200, result);
+        res.send(200, query);
     });
 });
 app.post('/login', function (req, res) {
