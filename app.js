@@ -99,7 +99,7 @@ app.post('/login', function (req, res) {
         'useremail': req.body.useremail,
         'password': req.body.password
     };
-    var query = connection.query("select * from users where useremail = '"+req.body.useremail+"'", req.body.user, function (err, result) {
+    var query = connection.query("select password from users where useremail = '"+req.body.useremail+"'", req.body.user, function (err, result) {
         if (err) {
             console.error(err);
             throw err;
