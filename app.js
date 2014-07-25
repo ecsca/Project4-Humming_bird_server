@@ -88,6 +88,7 @@ app.post('/join', function (req, res) {
         }
     });
 });
+
 app.post('/login', function (req, res) {
     var query = connection.query("select password from users where useremail = '"+req.body.useremail+"'", req.body.user, function (err, result) {
         if (err) {
@@ -95,8 +96,16 @@ app.post('/login', function (req, res) {
             res.send("Wrong Id");
         }
         else {
-            //var temp = connection.query("UPDATE users regid = ? WHERE )
             if (result[0].password === crypto.createHash('SHA512').update(req.body.password).digest('hex')) {
+            var user = [req.body.useremail, req.body.regid];
+            var temp = connection.query("UPDATE users regid = ? WHERE useremail = ?", user, function (err, result) {
+                if (err) {
+                    console.log(err);
+                    res.send(200, 'wrong regid');
+                }
+                else {
+                }
+            });
                 res.send(200, 'success');
             }
             else {
