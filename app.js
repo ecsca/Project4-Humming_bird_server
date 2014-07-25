@@ -84,7 +84,7 @@ app.post('/join', function (req, res) {
     console.log(user);
     console.log('end');
     var query = connection.query('INSERT INTO users SET useremail = ?, password = ?', user, function (err, result) {
-        //console.log(query);
+        console.log(query);
         if (err) {
             console.error(err);
             res.send(200, 'fail to join');
@@ -111,10 +111,10 @@ app.post('/login', function (req, res) {
 
 app.get('/users', function (req, res) {
     var query = connection.query('select * from users', function (err, rows) {
-        //console.log(rows);
+        console.log(rows);
         res.json(rows);
     });
-    //console.log(query);
+    console.log(query);
 });
 
 app.get('/', routes.index);
