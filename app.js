@@ -105,9 +105,9 @@ app.post('/login', function (req, res) {
                     res.send(200, 'wrong regid');
                 }
                 else {
+                res.send(200, 'success');
                 }
             });
-                res.send(200, 'success');
             }
             else {
                 res.send(200, 'login failed');
