@@ -82,7 +82,7 @@ app.post('/join', function (req, res) {
             //throw err;
         }
         console.log(query);
-        res.send(200, 'success');
+        res.send(200, result);
     });
 });
 app.post('/login', function (req, res) {
