@@ -91,6 +91,7 @@ app.post('/join', function (req, res) {
 
 app.post('/login', function (req, res) {
     console.log(req.body);
+    console.log(req.body.password);
     var query = connection.query("select * from users where useremail = ?", [req.body.useremail], function (err, result) {
         if (result.length==0)
         {
