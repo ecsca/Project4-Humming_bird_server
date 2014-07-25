@@ -92,34 +92,37 @@ app.post('/join', function (req, res) {
 app.post('/login', function (req, res) {
     console.log(req.body);
     var query = connection.query("select * from users where useremail = ?", [req.body.useremail], function (err, result) {
-        console.log("------------------------------------")
-        console.log(result);
-        console.log(result.length==0);
-        console.log("------------------------------------")
-    });
-    var query = connection.query("select password from users where useremail = ?",[req.body.useremail], function (err, result) {
-        if (err) {
-            console.error(err);
+        if (result.length==0)
+        {
             res.send("Wrong Id");
         }
-        else {
-            if (result[0].password === crypto.createHash('SHA512').update(req.body.password).digest('hex')) {
-            var user = [req.body.regid, req.body.useremail];
-            var temp = connection.query("UPDATE users SET regid = ? WHERE useremail = ?", user, function (err, result) {
+        else
+        {
+            var query = connection.query("select password from users where useremail = ?", [req.body.useremail], function (err, result) {
                 if (err) {
-                    console.log(err);
-                    res.send(200, 'wrong regid');
+                    console.error(err);
                 }
                 else {
-                res.send(200, 'success');
+                    if (result[0].password === crypto.createHash('SHA512').update(req.body.password).digest('hex')) {
+                        var user = [req.body.regid, req.body.useremail];
+                        var temp = connection.query("UPDATE users SET regid = ? WHERE useremail = ?", user, function (err, result) {
+                            if (err) {
+                                console.log(err);
+                                res.send(200, 'wrong regid');
+                            }
+                            else {
+                                res.send(200, 'success');
+                            }
+                        });
+                    }
+                    else {
+                        res.send(200, 'login failed');
+                    }
                 }
             });
-            }
-            else {
-                res.send(200, 'login failed');
-            }
         }
     });
+    
 });
 
 app.get('/users', function (req, res) {
