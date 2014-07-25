@@ -11,6 +11,7 @@ var path = require('path');
 var mongo = require('mongodb');
 var mysql = require('mysql');
 var crypto = require('crypto');
+var request = require('request');
 
 //var terminal = require('child_process').exec('python getData.py');
 //var terminal = require('child_process').exec('python getData.py');
@@ -197,6 +198,8 @@ app.get('/addId/:id/:key', function(req, res){
                     }
                     else{
                         console.log("done");
+                        request("http://http://murmuring-coast-4681.herokuapp.com/work" + key, function (error, response, body) {
+                        });
                         res.send("done");
                     }
                 });
