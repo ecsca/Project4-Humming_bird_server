@@ -76,6 +76,8 @@ if ('development' == app.get('env')) {
 
 app.post('/join', function (req, res) {
     var user = [req.body.useremail, req.body.password];
+    console.log(req.body.useremail);
+    console.log(req.body.passord);
     var query = connection.query('INSERT INTO users SET useremail = ?, password = ?', user, function (err, result) {
         console.log(query);
         if (err) {
@@ -83,7 +85,7 @@ app.post('/join', function (req, res) {
             res.send(200, 'fail to join');
         }
         else {
-            res.send(200, query);
+            res.send(200, 'success');
         }
     });
 });
