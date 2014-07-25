@@ -77,7 +77,7 @@ if ('development' == app.get('env')) {
 app.post('/join', function (req, res) {
     var pass = crypto.createHash('SHA512').update(req.body.password).digest('hex');
     var user = [req.body.useremail, pass];
-    var query = connection.query('INSERT INTO users SET useremail = ?, password = ?', user, function (err, result) {
+    var query = connection.query('INSERT INTO users SET useremail = ?, password = ? regid = ?', user, function (err, result) {
         console.log(query);
         if (err) {
             console.error(err);
@@ -92,13 +92,16 @@ app.post('/login', function (req, res) {
     var query = connection.query("select password from users where useremail = '"+req.body.useremail+"'", req.body.user, function (err, result) {
         if (err) {
             console.error(err);
-            throw err;
-        }
-        if (result[0].password === crypto.createHash('SHA512').update(req.body.password).digest('hex')) {
-        res.send(200, 'success');
+            res.send("Wrong Id");
         }
         else {
-            res.send(200, 'login failed');
+            //var temp = connection.query("UPDAT)
+            if (result[0].password === crypto.createHash('SHA512').update(req.body.password).digest('hex')) {
+                res.send(200, 'success');
+            }
+            else {
+                res.send(200, 'login failed');
+            }
         }
     });
 });
@@ -112,7 +115,6 @@ app.get('/users', function (req, res) {
 });
 
 app.get('/', routes.index);
-app.get('/users', user.list);
 app.get('/get',function(req, res){
     MongoClient.connect('mongodb://argon:qmfflwkem@ds027479.mongolab.com:27479/heroku_app27734772', function(err, db){
         db.collection('testArticle', function(err, collection){
