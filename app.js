@@ -91,39 +91,40 @@ app.post('/join', function (req, res) {
 
 app.post('/login', function (req, res) {
     console.log(req.body);
-    console.log(req.body.password);
-    var query = connection.query("select * from users where useremail = ?", [req.body.useremail], function (err, result) {
-        if (result.length==0)
-        {
-            res.send("Wrong Id");
-        }
-        else
-        {
-            var query = connection.query("select password from users where useremail = ?", [req.body.useremail], function (err, result) {
-                if (err) {
-                    console.error(err);
-                }
-                else {
-                    if (result[0].password === crypto.createHash('SHA512').update(req.body.password).digest('hex')) {
-                        var user = [req.body.regid, req.body.useremail];
-                        var temp = connection.query("UPDATE users SET regid = ? WHERE useremail = ?", user, function (err, result) {
-                            if (err) {
-                                console.log(err);
-                                res.send(200, 'wrong regid');
-                            }
-                            else {
-                                res.send(200, 'success');
-                            }
-                        });
+    if (req.body.useremail && req.body.password && req.body.regid) {
+        var query = connection.query("select * from users where useremail = ?", [req.body.useremail], function (err, result) {
+            if (result.length == 0) {
+                res.send("Wrong Id");
+            }
+            else {
+                var query = connection.query("select password from users where useremail = ?", [req.body.useremail], function (err, result) {
+                    if (err) {
+                        console.error(err);
                     }
                     else {
-                        res.send(200, 'login failed');
+                        if (result[0].password === crypto.createHash('SHA512').update(req.body.password).digest('hex')) {
+                            var user = [req.body.regid, req.body.useremail];
+                            var temp = connection.query("UPDATE users SET regid = ? WHERE useremail = ?", user, function (err, result) {
+                                if (err) {
+                                    console.log(err);
+                                    res.send(200, 'wrong regid');
+                                }
+                                else {
+                                    res.send(200, 'success');
+                                }
+                            });
+                        }
+                        else {
+                            res.send(200, 'login failed');
+                        }
                     }
-                }
-            });
-        }
-    });
-    
+                });
+            }
+        });
+    }
+    else {
+        res.send("wrong request");
+    }
 });
 
 app.get('/users', function (req, res) {
