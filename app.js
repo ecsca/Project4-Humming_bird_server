@@ -80,7 +80,7 @@ app.post('/join', function (req, res) {
         console.log(query);
         if (err) {
             console.error(err);
-            res.send(200, 'fail to join');
+            res.send(200, error);
         }
         else {
             res.send(200, query);
