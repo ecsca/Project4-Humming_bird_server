@@ -99,7 +99,7 @@ app.post('/login', function (req, res) {
         else {
             if (result[0].password === crypto.createHash('SHA512').update(req.body.password).digest('hex')) {
             var user = [req.body.regid, req.body.useremail];
-            var temp = connection.query("UPDATE users regid = ? WHERE useremail = ?", user, function (err, result) {
+            var temp = connection.query("UPDATE users SET regid = ? WHERE useremail = ?", user, function (err, result) {
                 if (err) {
                     console.log(err);
                     res.send(200, 'wrong regid');
