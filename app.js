@@ -96,6 +96,7 @@ app.post('/login', function (req, res) {
         }
         console.log(result[0].password);
         console.log(crypto.createHash('SHA512').update(req.body.password).digest('hex'));
+        console.log(req.body.password);
         if (result[0].password == crypto.createHash('SHA512').update(req.body.password).digest('hex')) {
         res.send(200, 'success');
         }
