@@ -75,18 +75,24 @@ if ('development' == app.get('env')) {
 
 
 app.post('/join', function (req, res) {
-    var pass = crypto.createHash('SHA512').update(req.body.password).digest('hex');
-    var user = [req.body.useremail, pass];
-    var query = connection.query('INSERT INTO users SET useremail = ?, password = ?', user, function (err, result) {
-        console.log(query);
-        if (err) {
-            console.error(err);
-            res.send(200, 'fail to join');
-        }
-        else {
-            res.send(200, 'success');
-        }
-    });
+    if (req.body.useremail && req.body.password) {
+        var pass = crypto.createHash('SHA512').update(req.body.password).digest('hex');
+        var user = [req.body.useremail, pass];
+        var query = connection.query('INSERT INTO users SET useremail = ?, password = ?', user, function (err, result) {
+            console.log(query);
+            if (err) {
+                console.error(err);
+                res.send(200, 'fail to join');
+            }
+            else {
+                res.send(200, 'success');
+            }
+        });
+    }
+    else {
+        req.send("wrong request");
+
+    }
 });
 
 app.post('/login', function (req, res) {
