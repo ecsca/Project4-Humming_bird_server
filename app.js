@@ -79,7 +79,7 @@ app.post('/join', function (req, res) {
     console.log(req.body.useremail);
     console.log(req.body.passord);
     var query = connection.query('INSERT INTO users SET useremail = ?, password = ?', user, function (err, result) {
-        console.log(query);
+        //console.log(query);
         if (err) {
             console.error(err);
             res.send(200, 'fail to join');
