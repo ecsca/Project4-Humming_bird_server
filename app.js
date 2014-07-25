@@ -24,7 +24,7 @@ var db_config = {
     database: 'heroku_4225976e02f5a12'
 };
 
-var connection;
+var connection = mysql.createConnection(db_config);
 
 function handleDisconnect() {
     connection = mysql.createConnection(db_config); // Recreate the connection, since
@@ -48,36 +48,6 @@ function handleDisconnect() {
 }
 
 handleDisconnect();
-/*
-var connection = mysql.createConnection({
-    host: 'us-cdbr-east-06.cleardb.net',
-    user: 'b02535f8bb3e27',
-    port: 3306,
-    password: 'f00599ce453aa27',
-    database: 'heroku_4225976e02f5a12'
-});
-*/
-/*
-connection.connect(function (err) {
-    if (err) {
-        console.error('mysql connection err');
-        console.error(err);
-        throw err;
-    }
-});
-*/
-/*
-   var Server = mongo.Server,
-   Db = mongo.Db,
-   BSON = mongo.BSONPure;
-   */
-
-
-//var server = new Server('ds053429.mongolab.com', 53429, {sslCA: ['argon', 'qmfflwkem']},{auto_reconnect: true});
-
-
-//db = new Db('Argon_test', server, {safe: true});
-//
 
 var MongoClient = require('mongodb').MongoClient
 , format = require('util').format;
