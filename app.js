@@ -199,6 +199,7 @@ app.get('/addId/:id/:key', function(req, res){
                     else{
                         console.log("done");
                         request("http://http://murmuring-coast-4681.herokuapp.com/work/" + key, function (error, response, body) {
+                            console.log(body);
                         });
                         res.send("done");
                     }
