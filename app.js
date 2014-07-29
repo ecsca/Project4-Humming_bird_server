@@ -179,6 +179,18 @@ app.get('/addId/:id/:key', function(req, res){
                             res.send("Error");
                         }
                         else{
+                            connection.query("select * from users where useremail = ?", [id], function(err, result)
+                            {
+                                var oldkeyword = result[0].keyword;
+                                oldkeyword=oldkeyword + "," + key;
+                                connection.query("UPDATE users set keyword = ? WHERE useremail = ?", [oldkeyword, id], function (err, result) {
+                                    if(err)
+                                    {
+                                        console.log("Error");
+                                        res.send("Error");
+                                    }
+                                });
+                            })
                             console.log("done");
                             res.send("done");
                         }
