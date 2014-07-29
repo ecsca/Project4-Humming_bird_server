@@ -168,7 +168,7 @@ app.get('/addId/:id/:key', function(req, res){
                 }
                 else
             {
-                console.log('no data');
+                //console.log('no data');
             }
             if(oldid)
             {
@@ -179,21 +179,33 @@ app.get('/addId/:id/:key', function(req, res){
                             res.send("Error");
                         }
                         else{
-                            connection.query("select * from users where useremail = ?", [id], function(err, result)
-                            {
+                            console.log("done");
+                            res.send("done!");
+                        }
+                            connection.query("select keyword from users where useremail = ?", [id], function (err, result) {
+                                console.log("in query");
+                                if (err)
+                                {
+                                    console.log("err");
+                                }
                                 var oldkeyword = result[0].keyword;
-                                oldkeyword=oldkeyword + "," + key;
+                                console.log(oldkeyword);
+                                if (oldkeyword == null)
+                                {
+                                    oldkeyword = key;
+                                }
+                                else {
+                                    oldkeyword = oldkeyword + "," + key;
+                                }
                                 connection.query("UPDATE users set keyword = ? WHERE useremail = ?", [oldkeyword, id], function (err, result) {
-                                    if(err)
-                                    {
+                                    if (err) {
                                         console.log("Error");
                                         res.send("Error");
                                     }
+                                    else {
+                                    }
                                 });
-                            })
-                            console.log("done");
-                            res.send("done");
-                        }
+                            });
                     });
                 }
                 else{
@@ -212,8 +224,32 @@ app.get('/addId/:id/:key', function(req, res){
                         console.log("done");
                         request("http://murmuring-coast-4681.herokuapp.com/work/" + key, function (error, response, body) {
                             console.log(body);
+
+
                         });
-                        res.send("done");
+                        connection.query("select keyword from users where useremail = ?", [id], function (err, result) {
+                            console.log("in query");
+                            if (err) {
+                                console.log("err");
+                            }
+                            var oldkeyword = result[0].keyword;
+                            console.log(oldkeyword);
+                            if (oldkeyword == null) {
+                                oldkeyword = key;
+                            }
+                            else {
+                                oldkeyword = oldkeyword + "," + key;
+                            }
+                            connection.query("UPDATE users set keyword = ? WHERE useremail = ?", [oldkeyword, id], function (err, result) {
+                                if (err) {
+                                    console.log("Error");
+                                    res.send("Error");
+                                }
+                                else {
+                                }
+                            });
+                        });
+                        res.send("done!");
                     }
                 });
             }
