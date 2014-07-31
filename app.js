@@ -12,6 +12,9 @@ var mongo = require('mongodb');
 var mysql = require('mysql');
 var crypto = require('crypto');
 var request = require('request');
+var fs = require('fs');
+var jade = require('jade');
+var ejs = require('ejs');
 
 //var terminal = require('child_process').exec('python getData.py');
 //var terminal = require('child_process').exec('python getData.py');
@@ -222,11 +225,11 @@ app.get('/addId/:id/:key', function(req, res){
                     }
                     else{
                         console.log("done");
-                        request("http://murmuring-coast-4681.herokuapp.com/work/" + key, function (error, response, body) {
-                            console.log(body);
+                        //request("http://murmuring-coast-4681.herokuapp.com/work/" + key, function (error, response, body) {
+//                            console.log(body);
 
 
-                        });
+ //                       });
                         connection.query("select keyword from users where useremail = ?", [id], function (err, result) {
                             console.log("in query");
                             if (err) {
@@ -319,6 +322,153 @@ app.get('/getArticle/:key', function (req, res) {
         });
     });
 });
+
+
+/*
+app.get('/showArticle/:key', function (req, res) {
+    var key = req.params.key;
+    var id = req.params.id;
+    var oldid = ""
+    MongoClient.connect('mongodb://argon:qmfflwkem@ds027479.mongolab.com:27479/heroku_app27734772', function (err, db) {
+        db.collection('testArticle', function (err, collection) {
+            collection.findOne({ "Keyword": key }, function (err, doc) {
+                if (doc) {
+                    var jar = JSON.parse(doc.Articles);
+                    console.log(jar[0].Title);
+                    var keywordlist = [];
+                    for (var t = 0; t < 20; t++)
+                    {
+                        keywordlist.push(jar[t].Title);
+                    }
+                    fs.readFile('./views/ddocddoc.ejs', 'utf8', function (error, data) {
+                        console.log(id);
+                        res.send(ejs.render(data, { keyword: keywordlist , ID: id}));
+                    });
+                }
+                else {
+                    console.log('no data');
+                    res.send("no data");
+                }
+            });
+        });
+    });
+});
+*/
+
+app.get('/Main/:id', function (req, res) {
+    var id = req.params.id;
+    var oldid = ""
+    if(id=="None")
+    {
+        res.send("fail");
+    }
+    else {
+        connection.query("select keyword from users where useremail = ?", [id], function (err, result) {
+            var key = result[0].keyword;
+            console.log(key);
+            var keyarr = key.split(",");
+            console.log(keyarr.length);
+            fs.readFile('./views/Main.ejs', 'utf8', function (error, data) {
+                console.log(keyarr);
+                res.send(ejs.render(data, { keyword: keyarr, ID: id}));
+            });
+
+        });
+
+        /*
+    MongoClient.connect('mongodb://argon:qmfflwkem@ds027479.mongolab.com:27479/heroku_app27734772', function (err, db) {
+
+        db.collection('testArticle', function (err, collection) {
+            collection.findOne({ "Keyword": key }, function (err, doc) {
+                if (doc) {
+                    var jar = JSON.parse(doc.Articles);
+                    console.log(jar[0].Title);
+                    var keywordlist = [];
+                    for (var t = 0; t < 20; t++)
+                    {
+                        keywordlist.push(jar[t].Title);
+                    }
+                    fs.readFile('./views/ddocddoc.ejs', 'utf8', function (error, data) {
+                        res.send(ejs.render(data, { keyword: keywordlist }));
+                    });
+                }
+                else {
+                    console.log('no data');
+                    res.send("no data");
+                }
+            });
+        });
+    });
+    */
+
+    }
+});
+
+app.get('/ShowArticle/:id/:keyword', function (req, res) {
+    var id = req.params.id;
+    var givenkey = req.params.keyword;
+    var oldid = ""
+    if(id=="None")
+    {
+        res.send("fail");
+    }
+    else {
+        connection.query("select keyword from users where useremail = ?", [id], function (err, result) {
+            var key = result[0].keyword;
+            console.log(key);
+            var keyarr = key.split(",");
+            console.log(keyarr.length);
+            MongoClient.connect('mongodb://argon:qmfflwkem@ds027479.mongolab.com:27479/heroku_app27734772', function (err, db) {
+                db.collection('testArticle', function (err, collection) {
+                    collection.findOne({ "Keyword": givenkey }, function (err, doc) {
+                        if (doc) {
+                            var jar = JSON.parse(doc.Articles);
+                            var articleTitleList = [];
+                            var articleTextList = [];
+                            var articleimgList = [];
+                            for (var t = 0; t < 20; t++) {
+                                articleTitleList.push(jar[t].Title);
+                                articleTextList.push(jar[t].NewsText);
+                                articleimgList.push(jar[t].img);
+                            }
+                            fs.readFile('./views/ShowArticle.ejs', 'utf8', function (error, data) {
+                            res.send(ejs.render(data, { keyword: keyarr, ID: id, articleTitleList: articleTitleList, articleTextList: articleTextList , articleimgList: articleimgList, key: givenkey}));
+                            });
+                            //console.log(articleTitleList);
+                            //console.log(articleTextList);
+                        }
+                    });
+                });
+            });
+        });
+    }
+});
+
+        /*
+    MongoClient.connect('mongodb://argon:qmfflwkem@ds027479.mongolab.com:27479/heroku_app27734772', function (err, db) {
+
+        db.collection('testArticle', function (err, collection) {
+            collection.findOne({ "Keyword": key }, function (err, doc) {
+                if (doc) {
+                    var jar = JSON.parse(doc.Articles);
+                    console.log(jar[0].Title);
+                    var keywordlist = [];
+                    for (var t = 0; t < 20; t++)
+                    {
+                        keywordlist.push(jar[t].Title);
+                    }
+                    fs.readFile('./views/ddocddoc.ejs', 'utf8', function (error, data) {
+                        res.send(ejs.render(data, { keyword: keywordlist }));
+                    });
+                }
+                else {
+                    console.log('no data');
+                    res.send("no data");
+                }
+            });
+        });
+    });
+    */
 
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
