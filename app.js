@@ -429,8 +429,8 @@ app.get('/ShowArticle/:id/:keyword', function (req, res) {
                             var articledateList = [];
                             var articleNewsList = [];
                             for (var t = 0; t < 20; t++) {
-                                articleTitleList.push(jar[t].Title.replace(/\&quot;/g, "\'").replace(/\&\#8228;/, "\."));
-                                articleTextList.push(jar[t].NewsText.replace(/\&quot;/g, "\'").replace(/\&\#8228;/, "\."));
+                                articleTitleList.push(jar[t].Title.replace(/\&quot;/g, "\'").replace(/\&\#8228;/, "\.").replace(/\&amp;/, "\&"));
+                                articleTextList.push(jar[t].NewsText.replace(/\&quot;/g, "\'").replace(/\&\#8228;/, "\.").replace(/\&amp;/, "\&"));
                                 articleimgList.push(jar[t].img);
                                 articledateList.push(jar[t].Date);
                                 articleNewsList.push(jar[t].News);
