@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <div class="leftSideBar" id= 'test' style="background-color: #1B1E24; height: 100%; width: 13%; float: left;display:block;margin:0px;padding:0px;">
+    <div class="leftSideBar" id= 'test' style="background-color: #1B1E24;height: 100%; width: 13%; float: left;display:block;margin:0px;padding:0px;">
         <div class="Profile" style="height:15%;width:100%;">
 
 		<br/>
@@ -85,7 +85,7 @@
 				<%}%>
 		</DIV>
     </div>
-	<div class = "Main Board" style="margin-left:300px;margin-top:50px">
+	<div class = "Main Board" style="margin-left:300px;margin-top:50px;">
 			<h1> 
 			<%=key%> 
 			</h1>
@@ -93,11 +93,16 @@
 				<% for(var x=0;x<articleTextList.length;x++){ %>
 				<div style="border: 1px solid black; border-right:0;border-left:0;border-bottom:0;padding-top:5px;padding-bottom:5px">
 					<img src="http://bit.sparcs.org/~argon/KeywordIco2.png">
-					<span class="menuTitle" style="color: #8b91a0; font-family: Gulim; font-weight: bold;margin-left:5px;margin-bottom:5px;">
-						<a name="aa" style="text-decoration:none;color:none;color:black" href='javascript:void(0)' onclick=showArticleText(<%= x %>) >
+					<span class="menuTitle" style="color: #8b91a0; font-family: Gulim;margin-left:5px;margin-bottom:5px;">
+						<a name="aa" style="text-decoration:none;color:none;color:black;font-weight:bold" href='javascript:void(0)' onclick=showArticleText(<%= x %>) >
 						<%= articleTitleList[x]%>
+						 - 
+						<%= NewsList[x]%>
+						[
+						<%= Date[x]%>
+						]
 						</a>
-						<div class="ArticleText<%= x %>" style="display:none;width:50%">
+						<div class="ArticleText<%= x %>" style="display:none;width:50%;line-height:2.2em;color:black">
 							<br/>
 							<br/>
 							<img src=<%= articleimgList[x]%>>

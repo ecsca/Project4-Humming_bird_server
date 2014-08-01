@@ -426,13 +426,17 @@ app.get('/ShowArticle/:id/:keyword', function (req, res) {
                             var articleTitleList = [];
                             var articleTextList = [];
                             var articleimgList = [];
+                            var articledateList = [];
+                            var articleNewsList = [];
                             for (var t = 0; t < 20; t++) {
-                                articleTitleList.push(jar[t].Title);
-                                articleTextList.push(jar[t].NewsText);
+                                articleTitleList.push(jar[t].Title.replace(/\&quot;/g, "\'").replace(/\&\#8228;/, "\."));
+                                articleTextList.push(jar[t].NewsText.replace(/\&quot;/g, "\'").replace(/\&\#8228;/, "\."));
                                 articleimgList.push(jar[t].img);
+                                articledateList.push(jar[t].Date);
+                                articleNewsList.push(jar[t].News);
                             }
                             fs.readFile('./views/ShowArticle.ejs', 'utf8', function (error, data) {
-                            res.send(ejs.render(data, { keyword: keyarr, ID: id, articleTitleList: articleTitleList, articleTextList: articleTextList , articleimgList: articleimgList, key: givenkey}));
+                            res.send(ejs.render(data, { keyword: keyarr, ID: id, articleTitleList: articleTitleList, articleTextList: articleTextList , articleimgList: articleimgList, key: givenkey, Date: articledateList, NewsList: articleNewsList}));
                             });
                             //console.log(articleTitleList);
                             //console.log(articleTextList);
